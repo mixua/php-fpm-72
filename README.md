@@ -11,4 +11,4 @@ And yes you can use Dockerfile for you own images.
 bcmath, bz2, calendar, Core, ctype, curl, date, dom, exif, fileinfo, filter, ftp,
 gd, gettext, hash, iconv, json, libxml, mbstring, mysqli, mysqlnd, openssl, pcntl, pcre, PDO, pdo_mysql,
 Phar, posix, readline, Reflection, session, shmop, SimpleXML, soap, sockets, sodium, SPL, standard,
-sysvmsg, sysvsem, sysvshm, tidy, tokenizer, wddx, xml, xmlreader, xmlwriter, xsl, Zend OPcache, zip, zlib
+sysvmsg, sysvsem, sysvshm, tidy, tokenizer, wddx, xml, xmlreader, xmlwriter, xsl, Zend OPcache, zip, zlib, php-redis
