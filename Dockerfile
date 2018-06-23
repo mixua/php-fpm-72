@@ -53,5 +53,3 @@ WORKDIR /etc/supervisor/conf.d
 
 # Define default command.
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-
-#CMD ["php-fpm7.2"]
