@@ -51,8 +51,6 @@ VOLUME ["/etc/supervisor/conf.d"]
 # Define working directory.
 WORKDIR /etc/supervisor/conf.d
 
-CMD echo test mail | mail alex.medve@gmail.com
-
 # Define default command.
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
