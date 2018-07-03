@@ -1,11 +1,13 @@
 FROM ubuntu:16.04
 MAINTAINER  alex.medve@gmail.com
 
-RUN apt-get clean && apt-get -y update && apt-get -y upgrade && apt-get install -y locales curl software-properties-common git \
-  && locale-gen en_US.UTF-8 && export TERM=xterm
-RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
-RUN apt-get clean && apt-get -y update && apt-get -y upgrade
+RUN \
+		apt-get clean && apt-get -y update && apt-get -y upgrade && \
+		apt-get install -y locales curl software-properties-common git && \
+		locale-gen en_US.UTF-8 && export TERM=xterm && LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php && \
+		apt-get clean && apt-get -y update && apt-get -y upgrade
 
+# Installing the php modules and third-party software
 RUN \
 		echo postfix postfix/main_mailer_type string "'Local only'" | debconf-set-selections && \
 		echo postfix postfix/mynetworks string "127.0.0.0/8" | debconf-set-selections && \
@@ -18,6 +20,7 @@ RUN \
                 php7.2-sysvsem php7.2-sysvshm php7.2-xml php7.2-xmlreader php7.2-xmlwriter php7.2-xsl php7.2-zip \
 		php7.2-redis supervisor postfix libsasl2-modules sasl2-bin bsd-mailx
 
+# Configuring the php-fpm
 RUN \
 		sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/7.2/fpm/php.ini && \
 		sed -i "s/display_errors = Off/display_errors = On/" /etc/php/7.2/fpm/php.ini && \
@@ -32,13 +35,15 @@ RUN \
 		sed -i "s/listen = .*/listen = 9000/" /etc/php/7.2/fpm/pool.d/www.conf && \
 		sed -i "s/;catch_workers_output = .*/catch_workers_output = yes/" /etc/php/7.2/fpm/pool.d/www.conf
 
-# Install Composer and make it available in the PATH
+# Installing Composer and make it available in the PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
+# Cleaning up after apt manager
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 9000
 
+# Copying files that previously prepared for the image
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY aliases /etc/aliases
 
