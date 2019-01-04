@@ -45,9 +45,6 @@ EXPOSE 9000
 
 # Copying files that previously prepared for the image
 COPY supervisord.conf /etc/supervisor/supervisord.conf
-COPY aliases /etc/aliases
-
-RUN newaliases
 
 # Define mountable directories.
 VOLUME ["/etc/supervisor/conf.d"]
